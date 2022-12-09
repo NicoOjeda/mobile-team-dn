@@ -16,10 +16,6 @@ export default function App(props) {
     let dispatch = useDispatch()
     const hotels = useSelector(state => state.hotelsReducer.listHotels)
 
-    
-    console.log(valueInput);
-    // console.log(selectedValue);
-
     useEffect(()=>{
         if(valueInput === ""){
             dispatch(hotelsAction.getHotels())
@@ -32,7 +28,6 @@ export default function App(props) {
             console.log(search);
             dispatch(hotelsAction.getHotelsNameOrder(search))
         }
-        // dispatch(hotelsAction.getHotels())
     },[valueInput])
     
 
@@ -86,6 +81,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingVertical: 30
     },
     picker:{
         backgroundColor: '#E7C621',
