@@ -1,58 +1,81 @@
-import { StyleSheet, TextInput, View,ImageBackground,ScrollView, Image,TouchableOpacity, Text } from 'react-native';
-import { useEffect, useRef, useState } from 'react';
+import { StyleSheet, TextInput, View,ImageBackground,ScrollView, Image,TouchableOpacity, Text} from 'react-native';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import hotelsAction from '../redux/actions/hotelsAction';
+import {Picker} from '@react-native-picker/picker';
+
+
 
 export default function App(props) {
 
 
     const image= {uri: "https://img.freepik.com/foto-gratis/equipaje-amarillo-plano-espacio-copia_23-2148786124.jpg?w=826&t=st=1670538613~exp=1670539213~hmac=33ca10425840e7c992f10488f22740a3f4802616e952e2bbafcbc9baaa5314cc"}
     const image2= {uri: 'https://a.cdn-hotels.com/gdcs/production40/d811/5e89ad90-8f10-11e8-b6b0-0242ac110007.jpg?impolicy=fcrop&w=800&h=533&q=medium'}
-    const inputRef1 = useRef(null)
     const [valueInput, setvalueInput] = useState('')
+    const [selectedValue, setSelectedValue]  = useState('')
     let dispatch = useDispatch()
     const hotels = useSelector(state => state.hotelsReducer.listHotels)
 
     
     console.log(valueInput);
+    // console.log(selectedValue);
 
     useEffect(()=>{
-        // if(valueInput === ""){
-        //     dispatch(hotelsAction.getHotels())
-        // } else {
-        //     let search = {
-        //         name: valueInput
+        if(valueInput === ""){
+            dispatch(hotelsAction.getHotels())
+        } else {
+            let search = {
+                name: valueInput,
+                order:""
               
-        //     }
-        //     console.log(search);
-        //     dispatch(hotelsAction.getHotelsNameOrder(search))
-        // }
-        dispatch(hotelsAction.getHotels())
+            }
+            console.log(search);
+            dispatch(hotelsAction.getHotelsNameOrder(search))
+        }
+        // dispatch(hotelsAction.getHotels())
     },[valueInput])
     
-//    const navigateHotel=()=>{
-//     props.navigation.navigate(`Hotel/${hotel._id}`)
-//   }
 
 
   return (
-    <ImageBackground source={image} resizeMode="cover" style={styles.homeContainer}>
+      <ImageBackground source={image} resizeMode="cover" style={styles.homeContainer}>
+        <View >
         <TextInput placeholder='search' style={styles.search} onChangeText={setvalueInput} value={valueInput}/>
+            {/* <Picker style={styles.picker}
+                selectedValue={selectedValue}
+                oonValueChange={(itemValue) => setSelectedValue(itemValue)}>
+                <Picker.Item label="order: asc" value="asc" />
+                <Picker.Item label="order: dsc" value="dsc" />
+            </Picker> */}
+        </View>
         <ScrollView >
         {
-            hotels.map(hotel=>(
-                <View  style={styles.hotelCard} >
-                    <Text style={styles.hotelcardTitle}>{hotel.name}</Text>
-                    <Image style={styles.hotelcardImg} source={{uri: hotel.photo}}></Image>
-                    <TouchableOpacity style={styles.hotelcardButton} onPress={()=> props.navigation.navigate('Hotel Details', {
-                        id: hotel._id
-                    })}>
-                        <Text>view more!</Text>
-                    </TouchableOpacity>
-                    {/* <TouchableOpacity style={styles.hotelcardButton} title='view more!'> </TouchableOpacity> */}
-            </View>
-            ))
-        }
+            hotels.length === 0 ? 
+                    (
+                    <View className='Hotelscard-empty'>
+                        <Text>We didn't found this place. Try other!</Text>
+                    </View>
+                    ): 
+                    (
+                    <>
+                    {hotels.map(hotel=>(
+                        <View  style={styles.hotelCard} >
+                            <Text style={styles.hotelcardTitle}>{hotel.name}</Text>
+                            <Image style={styles.hotelcardImg} source={{uri: hotel.photo}}></Image>
+                            <TouchableOpacity style={styles.hotelcardButton} onPress={()=> props.navigation.navigate('Hotel Details', {
+                                id: hotel._id
+                            })}>
+                                <Text>view more!</Text>
+                            </TouchableOpacity>
+                    </View>
+                    ))} 
+                    </>
+                    ) 
+                }
+
+
+
+        
         </ScrollView>
     </ImageBackground>
   );
@@ -63,6 +86,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    picker:{
+        backgroundColor: '#E7C621',
+        borderRadius: 10,
+        borderColor: "black",
+        borderWidth: 1,
+        height:40
     },
     search: {
         borderRadius: 10,
