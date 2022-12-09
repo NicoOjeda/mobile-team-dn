@@ -48,16 +48,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingVertical: 70,
     },
-   
-    search: {
-        borderRadius: 10,
-        padding:3,
-        paddingHorizontal:6,
-        margin: 10,
-        width: 150,
-        borderColor: "black",
-        borderWidth: 1,
-    },
     hotelCard: {
         flex: 1,
         flexDirection: "column",
@@ -73,25 +63,10 @@ const styles = StyleSheet.create({
     hotelcardTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        // fontFamily: 'adobe-handwriting-ernie',
     },
     hotelcardImg: {
         objectFit: 'cover',
         height: 377,
         width: 300,
-    },
-    hotelcardButton: {
-        textAlign: 'center',
-        textTransform: 'uppercase',
-        backgroundSize: 200,
-        backgroundColor: '#E7C621',
-        borderRadius: 10,
-        borderColor: "black",
-        borderWidth: 1,
-        shadowColor: "black",
-        paddingVertical: 8,
-        paddingHorizontal: 45,
-        margin: 10,
-        fontStyle: "italic"
     },
 });
