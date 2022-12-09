@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Button, ImageBackground, TouchableOpacity } from 'react-native';
 
 export default function Home (props) {
 
@@ -12,12 +12,17 @@ const image= {uri: "https://img.freepik.com/foto-gratis/equipaje-amarillo-plano-
     return (
       <ImageBackground source={image} resizeMode="cover" style={styles.homeContainer}>
       <View style={styles.Container}>
-        <Text>Mytinerary</Text>
-        <Text>To travel is to live</Text>
+        <Text style={styles.text}>Mytinerary</Text>
+        <Text style={styles.text2}>To travel is to live</Text>
         {/* <button title='Cities'/> */}
           <View style={styles.buttonsContainer}>
-            <Button style={styles.buttons} onPress={navigateHotels} title='Hotels'/>
-            <Button style={styles.buttons} onPress={navigateHotels} title='Cities'/>
+            <TouchableOpacity style={styles.buttons} onPress={navigateHotels} title='Hotels'>
+              <Text>Hotels</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttons} onPress={navigateHotels} title='Hotels'>
+              <Text>Cities</Text>
+            </TouchableOpacity>
+            {/* <Button style={styles.buttons} onPress={navigateHotels} title='Cities'/> */}
           </View>
       </View>
       </ImageBackground>
@@ -38,7 +43,6 @@ const image= {uri: "https://img.freepik.com/foto-gratis/equipaje-amarillo-plano-
       gap: 4
     },
     buttonsContainer:{
-      
       alignItems: 'center',
       justifyContent: 'center',
       flexDirection: 'row',
@@ -50,6 +54,23 @@ const image= {uri: "https://img.freepik.com/foto-gratis/equipaje-amarillo-plano-
       alignItems: 'center',
       justifyContent: 'center',
       flexDirection: 'row',
+      borderRadius: 10,
+      padding:6,
+      borderColor: "black",
+      borderWidth: 1,
       margin: 10   
+    },
+    text:{
+      color: '#000',
+        fontSize: 35,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontStyle: 'italic'
+    },
+    text2:{
+      color: '#000',
+        fontSize: 20,
+        textAlign: 'center',
+        fontStyle: 'italic'
     }
   });
