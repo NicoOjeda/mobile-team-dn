@@ -1,20 +1,112 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, TextInput, View,ImageBackground,ScrollView, Image,TouchableOpacity, Text } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import hotelsAction from '../redux/actions/hotelsAction';
 
-export default function App() {
+export default function App(props) {
+
+
+    const image= {uri: "https://img.freepik.com/foto-gratis/equipaje-amarillo-plano-espacio-copia_23-2148786124.jpg?w=826&t=st=1670538613~exp=1670539213~hmac=33ca10425840e7c992f10488f22740a3f4802616e952e2bbafcbc9baaa5314cc"}
+    const image2= {uri: 'https://a.cdn-hotels.com/gdcs/production40/d811/5e89ad90-8f10-11e8-b6b0-0242ac110007.jpg?impolicy=fcrop&w=800&h=533&q=medium'}
+    const inputRef1 = useRef(null)
+    const [valueInput, setvalueInput] = useState('')
+    let dispatch = useDispatch()
+    const hotels = useSelector(state => state.hotelsReducer.listHotels)
+
+    
+    console.log(valueInput);
+
+    useEffect(()=>{
+        // if(valueInput === ""){
+        //     dispatch(hotelsAction.getHotels())
+        // } else {
+        //     let search = {
+        //         name: valueInput
+              
+        //     }
+        //     console.log(search);
+        //     dispatch(hotelsAction.getHotelsNameOrder(search))
+        // }
+        dispatch(hotelsAction.getHotels())
+    },[valueInput])
+    
+//    const navigateHotel=()=>{
+//     props.navigation.navigate(`Hotel/${hotel._id}`)
+//   }
+
+
   return (
-    <View style={styles.container}>
-      <Text>hotels</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ImageBackground source={image} resizeMode="cover" style={styles.homeContainer}>
+        <TextInput placeholder='search' style={styles.search} onChangeText={setvalueInput} value={valueInput}/>
+        <ScrollView >
+        {
+            hotels.map(hotel=>(
+                <View  style={styles.hotelCard} >
+                    <Text style={styles.hotelcardTitle}>{hotel.name}</Text>
+                    <Image style={styles.hotelcardImg} source={{uri: hotel.photo}}></Image>
+                    <TouchableOpacity style={styles.hotelcardButton} onPress={()=> props.navigation.navigate('Hotel Details', {
+                        id: hotel._id
+                    })}>
+                        <Text>view more!</Text>
+                    </TouchableOpacity>
+                    {/* <TouchableOpacity style={styles.hotelcardButton} title='view more!'> </TouchableOpacity> */}
+            </View>
+            ))
+        }
+        </ScrollView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#red',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    homeContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    search: {
+        borderRadius: 10,
+        padding:3,
+        paddingHorizontal:6,
+        margin: 10,
+        width: 150,
+        borderColor: "black",
+        borderWidth: 1,
+    },
+    hotelCard: {
+        flex: 1,
+        flexDirection: "column",
+        height: 500,
+        justifyContent: "center",
+        alignItems: 'center',
+        padding: 8,
+        margin: 8,
+        backgroundColor: 'white',
+        shadowColor: "black",
+        borderRadius: 25,
+    },
+    hotelcardTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        // fontFamily: 'adobe-handwriting-ernie',
+    },
+    hotelcardImg: {
+        objectFit: 'cover',
+        height: 377,
+        width: 300,
+    },
+    hotelcardButton: {
+        textAlign: 'center',
+        textTransform: 'uppercase',
+        backgroundSize: 200,
+        backgroundColor: '#E7C621',
+        borderRadius: 10,
+        borderColor: "black",
+        borderWidth: 1,
+        shadowColor: "black",
+        paddingVertical: 8,
+        paddingHorizontal: 45,
+        margin: 10,
+        fontStyle: "italic"
+    },
 });

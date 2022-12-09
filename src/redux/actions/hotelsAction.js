@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 const getHotels = createAsyncThunk('getHotels', async ()=>{
-    const response = await axios.get('http://localhost:8000/api/hotels')
+    const response = await axios.get('http://192.168.0.6:8000/api/hotels')
     // console.log(response.data.response)
     return {
         listHotels : response.data.response
@@ -13,7 +13,7 @@ const getHotels = createAsyncThunk('getHotels', async ()=>{
 
 const getHotelsNameOrder = createAsyncThunk('getHotelsNameOrder', async (data)=>{
     try{
-        const response = await axios.get(`http://localhost:8000/api/hotels?order=${data.order}&name=${data.name}`)
+        const response = await axios.get(`http://192.168.0.6:8000/api/hotels?order=${data.order}&name=${data.name}`)
         return {
             listHotels : response.data.response
         }
