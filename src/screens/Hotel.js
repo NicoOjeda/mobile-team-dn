@@ -35,6 +35,16 @@ export default function App({props, route}) {
             </View>
                 ) )
         }
+        {
+            data.map((datah)=>
+                 (
+                    <View  style={styles.hotelCard} >
+                    <Text style={styles.hotelcardTitle}>{datah.name}</Text>
+                    <Image style={styles.hotelcardImg} source={{uri: datah.photo}}></Image>
+                    <Text style={styles.hotelcardTitle}>Capacity: {datah.capacity} guests</Text>
+            </View>
+                ) )
+        }
         </View>
         </ScrollView>
     </ImageBackground>
